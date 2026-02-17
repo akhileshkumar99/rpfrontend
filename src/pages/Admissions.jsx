@@ -6,7 +6,7 @@ export default function Admissions() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:5000/api/admissions', {
+      const res = await fetch('https://rp-school-backend.onrender.com/api/admissions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

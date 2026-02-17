@@ -10,7 +10,7 @@ export default function Faculty() {
 
   const fetchFaculty = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/faculty');
+      const res = await fetch('https://rp-school-backend.onrender.com/api/faculty');
       const data = await res.json();
       setFaculty(data);
     } catch (err) {
@@ -52,7 +52,7 @@ export default function Faculty() {
                 <div className="relative h-72 overflow-hidden">
                   {member.imageUrl ? (
                     <img 
-                      src={`http://localhost:5000${member.imageUrl}`}
+                      src={`https://rp-school-backend.onrender.com${member.imageUrl}`}
                       alt={member.name}
                       className="w-full h-full object-cover transform group-hover:scale-125 group-hover:rotate-3 transition-transform duration-700"
                     />
