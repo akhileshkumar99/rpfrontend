@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import API_URL from '../config';
 
 export default function AdminDashboard({ admin, onLogout }) {
   const [activeTab, setActiveTab] = useState('gallery');
@@ -40,15 +41,15 @@ export default function AdminDashboard({ admin, onLogout }) {
   const fetchAllCounts = async () => {
     try {
       const [galleryRes, heroRes, facultyRes, coursesRes, admissionsRes, contactsRes, noticesRes, eventsRes, reviewsRes] = await Promise.all([
-        fetch('https://rp-school-backend.onrender.com/api/gallery'),
-        fetch('https://rp-school-backend.onrender.com/api/hero-slides'),
-        fetch('https://rp-school-backend.onrender.com/api/faculty'),
-        fetch('https://rp-school-backend.onrender.com/api/courses'),
-        fetch('https://rp-school-backend.onrender.com/api/admissions'),
-        fetch('https://rp-school-backend.onrender.com/api/contacts'),
-        fetch('https://rp-school-backend.onrender.com/api/notices'),
-        fetch('https://rp-school-backend.onrender.com/api/events'),
-        fetch('https://rp-school-backend.onrender.com/api/reviews/all')
+        fetch(`${API_URL}/api/gallery`),
+        fetch(`${API_URL}/api/hero-slides`),
+        fetch(`${API_URL}/api/faculty`),
+        fetch(`${API_URL}/api/courses`),
+        fetch(`${API_URL}/api/admissions`),
+        fetch(`${API_URL}/api/contacts`),
+        fetch(`${API_URL}/api/notices`),
+        fetch(`${API_URL}/api/events`),
+        fetch(`${API_URL}/api/reviews/all`)
       ]);
       
       setGallery(await galleryRes.json());
@@ -68,31 +69,31 @@ export default function AdminDashboard({ admin, onLogout }) {
   const fetchData = async () => {
     try {
       if (activeTab === 'gallery') {
-        const res = await fetch('https://rp-school-backend.onrender.com/api/gallery');
+        const res = await fetch(`${API_URL}/api/gallery`);
         setGallery(await res.json());
       } else if (activeTab === 'hero') {
-        const res = await fetch('https://rp-school-backend.onrender.com/api/hero-slides');
+        const res = await fetch(`${API_URL}/api/hero-slides`);
         setHeroSlides(await res.json());
       } else if (activeTab === 'faculty') {
-        const res = await fetch('https://rp-school-backend.onrender.com/api/faculty');
+        const res = await fetch(`${API_URL}/api/faculty`);
         setFaculty(await res.json());
       } else if (activeTab === 'courses') {
-        const res = await fetch('https://rp-school-backend.onrender.com/api/courses');
+        const res = await fetch(`${API_URL}/api/courses`);
         setCourses(await res.json());
       } else if (activeTab === 'admissions') {
-        const res = await fetch('https://rp-school-backend.onrender.com/api/admissions');
+        const res = await fetch(`${API_URL}/api/admissions`);
         setAdmissions(await res.json());
       } else if (activeTab === 'contacts') {
-        const res = await fetch('https://rp-school-backend.onrender.com/api/contacts');
+        const res = await fetch(`${API_URL}/api/contacts`);
         setContacts(await res.json());
       } else if (activeTab === 'notices') {
-        const res = await fetch('https://rp-school-backend.onrender.com/api/notices');
+        const res = await fetch(`${API_URL}/api/notices`);
         setNotices(await res.json());
       } else if (activeTab === 'events') {
-        const res = await fetch('https://rp-school-backend.onrender.com/api/events');
+        const res = await fetch(`${API_URL}/api/events`);
         setEvents(await res.json());
       } else if (activeTab === 'reviews') {
-        const res = await fetch('https://rp-school-backend.onrender.com/api/reviews/all');
+        const res = await fetch(`${API_URL}/api/reviews/all`);
         setReviews(await res.json());
       }
     } catch (err) {
@@ -107,7 +108,7 @@ export default function AdminDashboard({ admin, onLogout }) {
     formData.append('adminId', admin._id);
 
     try {
-      const res = await fetch('https://rp-school-backend.onrender.com/api/gallery', {
+      const res = await fetch(`${API_URL}/api/gallery`, {
         method: 'POST',
         body: formData
       });
@@ -128,7 +129,7 @@ export default function AdminDashboard({ admin, onLogout }) {
     formData.append('subtitle', 'Quality Education');
 
     try {
-      const res = await fetch('https://rp-school-backend.onrender.com/api/hero-slides', {
+      const res = await fetch(`${API_URL}/api/hero-slides`, {
         method: 'POST',
         body: formData
       });
@@ -144,7 +145,7 @@ export default function AdminDashboard({ admin, onLogout }) {
 
   const deleteItem = async (type, id) => {
     if (!confirm('Are you sure?')) return;
-    await fetch(`https://rp-school-backend.onrender.com/api/${type}/${id}`, { method: 'DELETE' });
+    await fetch(`${API_URL}/api/${type}/${id}`, { method: 'DELETE' });
     fetchData();
   };
 
@@ -159,8 +160,8 @@ export default function AdminDashboard({ admin, onLogout }) {
     if (facultyForm.image) formData.append('image', facultyForm.image);
 
     const url = editingFaculty 
-      ? `https://rp-school-backend.onrender.com/api/faculty/${editingFaculty}` 
-      : 'https://rp-school-backend.onrender.com/api/faculty';
+      ? `${API_URL}/api/faculty/${editingFaculty}` 
+      : `${API_URL}/api/faculty`;
     
     try {
       const res = await fetch(url, {
@@ -195,7 +196,7 @@ export default function AdminDashboard({ admin, onLogout }) {
 
   const updateStatus = async (type, id, status) => {
     try {
-      await fetch(`https://rp-school-backend.onrender.com/api/${type}/${id}/status`, {
+      await fetch(`${API_URL}/api/${type}/${id}/status`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status })
@@ -216,8 +217,8 @@ export default function AdminDashboard({ admin, onLogout }) {
     if (noticeForm.image) formData.append('image', noticeForm.image);
     
     const url = editingNotice 
-      ? `https://rp-school-backend.onrender.com/api/notices/${editingNotice}` 
-      : 'https://rp-school-backend.onrender.com/api/notices';
+      ? `${API_URL}/api/notices/${editingNotice}` 
+      : `${API_URL}/api/notices`;
     
     try {
       const res = await fetch(url, {
@@ -245,7 +246,7 @@ export default function AdminDashboard({ admin, onLogout }) {
 
   const handleCourseSubmit = async (e) => {
     e.preventDefault();
-    const url = editingCourse ? `https://rp-school-backend.onrender.com/api/courses/${editingCourse}` : 'https://rp-school-backend.onrender.com/api/courses';
+    const url = editingCourse ? `${API_URL}/api/courses/${editingCourse}` : `${API_URL}/api/courses`;
     try {
       const res = await fetch(url, {
         method: editingCourse ? 'PUT' : 'POST',
@@ -361,11 +362,11 @@ export default function AdminDashboard({ admin, onLogout }) {
               {gallery.map(img => (
                 <div key={img._id} className="relative group rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all">
                   <img 
-                    src={`https://rp-school-backend.onrender.com${img.imageUrl}`} 
+                    src={img.imageUrl} 
                     className="w-full h-48 object-cover cursor-pointer" 
                     onClick={() => {
                       console.log('Image clicked:', img.imageUrl);
-                      setViewImage(`https://rp-school-backend.onrender.com${img.imageUrl}`);
+                      setViewImage(img.imageUrl);
                     }}
                     alt="Gallery"
                   />
@@ -422,7 +423,7 @@ export default function AdminDashboard({ admin, onLogout }) {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {heroSlides.map(slide => (
                 <div key={slide._id} className="relative group rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all transform hover:scale-105">
-                  <img src={`https://rp-school-backend.onrender.com${slide.imageUrl}`} className="w-full h-64 object-cover" />
+                  <img src={slide.imageUrl} className="w-full h-64 object-cover" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-all">
                     <button
                       onClick={() => deleteItem('hero-slides', slide._id)}
@@ -473,7 +474,7 @@ export default function AdminDashboard({ admin, onLogout }) {
               {faculty.map(member => (
                 <div key={member._id} className="bg-white p-4 rounded-lg shadow hover:shadow-lg transition border">
                   {member.imageUrl && (
-                    <img src={`https://rp-school-backend.onrender.com${member.imageUrl}`} className="w-full h-48 object-cover rounded-lg mb-3" />
+                    <img src={member.imageUrl} className="w-full h-48 object-cover rounded-lg mb-3" />
                   )}
                   <h3 className="font-bold text-lg text-gray-800 mb-1">{member.name}</h3>
                   <p className="text-indigo-600 font-medium text-sm mb-1">{member.department}</p>
@@ -662,7 +663,7 @@ export default function AdminDashboard({ admin, onLogout }) {
                     <div className="flex gap-2">
                       {!review.isApproved && (
                         <button onClick={async () => {
-                          await fetch(`https://rp-school-backend.onrender.com/api/reviews/${review._id}/approve`, { method: 'PUT' });
+                          await fetch(`${API_URL}/api/reviews/${review._id}/approve`, { method: 'PUT' });
                           fetchData();
                         }} className="px-4 py-2 bg-green-500 text-white rounded-xl font-bold hover:bg-green-600">✓ Approve</button>
                       )}
@@ -728,7 +729,7 @@ export default function AdminDashboard({ admin, onLogout }) {
                   </div>
                   {notice.imageUrl && (
                     <div className="mb-4">
-                      <img src={`https://rp-school-backend.onrender.com${notice.imageUrl}`} alt={notice.title} className="w-full max-w-md h-48 object-cover rounded-xl shadow-md" />
+                      <img src={notice.imageUrl} alt={notice.title} className="w-full max-w-md h-48 object-cover rounded-xl shadow-md" />
                     </div>
                   )}
                   <p className="text-gray-700 mb-4">{notice.content}</p>

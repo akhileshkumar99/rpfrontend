@@ -47,7 +47,7 @@ export default function Gallery() {
               >
                 <div className="relative h-64 overflow-hidden">
                   <img
-                    src={`https://rp-school-backend.onrender.com${image.imageUrl}`}
+                    src={image.imageUrl}
                     alt={image.category}
                     className="w-full h-full object-cover transform group-hover:scale-110 group-hover:rotate-2 transition-transform duration-700"
                   />
@@ -71,7 +71,7 @@ export default function Gallery() {
             >
               ✕
             </button>
-            <img src={`https://rp-school-backend.onrender.com${selectedImage.imageUrl}`} alt={selectedImage.category} className="w-full max-h-[90vh] object-contain rounded-2xl shadow-2xl" />
+            <img src={selectedImage.imageUrl} alt={selectedImage.category} className="w-full max-h-[90vh] object-contain rounded-2xl shadow-2xl" />
           </div>
         </div>
       )}
