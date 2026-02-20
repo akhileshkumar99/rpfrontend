@@ -283,100 +283,131 @@ export default function AdminDashboard({ admin, onLogout }) {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex flex-col lg:flex-row">
-      {/* Sidebar */}
-      <div className="w-full lg:w-64 bg-white shadow-2xl lg:fixed lg:h-full overflow-y-auto border-r border-gray-200 flex flex-col z-50">
-        <div className="py-3 px-4 border-b border-gray-200 bg-gradient-to-br from-indigo-600 to-purple-600">
-          <div className="flex flex-col items-center gap-2 mb-2">
-            <div className="w-14 h-14 rounded-full overflow-hidden flex items-center justify-center bg-white shadow-lg">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 flex flex-col lg:flex-row">
+      {/* Modern Sidebar */}
+      <div className="w-full lg:w-72 bg-white shadow-2xl lg:fixed lg:h-full overflow-y-auto border-r border-slate-200 flex flex-col z-50">
+        {/* Header */}
+        <div className="py-6 px-6 border-b border-slate-200 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600">
+          <div className="flex flex-col items-center gap-4">
+            <div className="w-16 h-16 rounded-full overflow-hidden flex items-center justify-center bg-white shadow-xl ring-4 ring-white/20">
               <img src="/rp logo (2).png" alt="RP School" className="w-full h-full object-cover" />
             </div>
             <div className="text-center">
-              <h1 className="text-sm font-extrabold text-white">Admin Panel</h1>
-              <p className="text-[9px] text-white/80 font-semibold">RP School</p>
+              <h1 className="text-lg font-bold text-white">RP School Admin</h1>
+              <p className="text-xs text-white/80 font-medium">Management Dashboard</p>
             </div>
           </div>
-          <div className="text-center bg-white/20 backdrop-blur-sm rounded-lg py-1.5 px-2">
-            <div className="text-[9px] font-bold text-white">{currentTime.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}</div>
-            <div className="text-sm font-extrabold text-white">{currentTime.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}</div>
+          <div className="mt-4 text-center bg-white/10 backdrop-blur-sm rounded-xl py-3 px-4">
+            <div className="text-xs font-semibold text-white/90">{currentTime.toLocaleDateString('en-IN', { weekday: 'short', day: '2-digit', month: 'short' })}</div>
+            <div className="text-lg font-bold text-white">{currentTime.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}</div>
           </div>
         </div>
 
-        <nav className="p-3 flex-1 overflow-y-auto pb-24">
-          {tabs.map(tab => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg mb-1 transition-all ${
-                activeTab === tab.id
-                  ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-md'
-                  : 'text-gray-700 hover:bg-gray-50'
-              }`}
-            >
-              <span className="text-xl">{tab.icon}</span>
-              <div className="flex-1 text-left">
-                <div className="font-semibold text-sm">{tab.label}</div>
-                <div className={`text-xs ${activeTab === tab.id ? 'text-white/70' : 'text-gray-400'}`}>{tab.count} items</div>
-              </div>
-            </button>
-          ))}
+        {/* Navigation */}
+        <nav className="p-4 flex-1 overflow-y-auto">
+          <div className="space-y-2">
+            {tabs.map(tab => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`w-full flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-200 group ${
+                  activeTab === tab.id
+                    ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg transform scale-105'
+                    : 'text-slate-600 hover:bg-slate-100 hover:text-slate-800'
+                }`}
+              >
+                <span className="text-2xl">{tab.icon}</span>
+                <div className="flex-1 text-left">
+                  <div className="font-semibold text-sm">{tab.label}</div>
+                  <div className={`text-xs ${activeTab === tab.id ? 'text-white/70' : 'text-slate-400'}`}>
+                    {tab.count} {tab.count === 1 ? 'item' : 'items'}
+                  </div>
+                </div>
+                {activeTab === tab.id && (
+                  <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                )}
+              </button>
+            ))}
+          </div>
         </nav>
 
-        <div className="px-3 py-3 border-t border-gray-200 lg:fixed lg:bottom-0 lg:w-64 bg-white">
-          <div className="mb-2 px-2">
-            <p className="text-xs font-bold text-gray-800">{admin.username}</p>
-            <p className="text-[10px] text-gray-500">Administrator</p>
+        {/* Footer */}
+        <div className="p-4 border-t border-slate-200 bg-slate-50">
+          <div className="mb-3 px-2">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center text-white font-bold text-sm">
+                {admin.username.charAt(0).toUpperCase()}
+              </div>
+              <div>
+                <p className="text-sm font-bold text-slate-800">{admin.username}</p>
+                <p className="text-xs text-slate-500">System Administrator</p>
+              </div>
+            </div>
           </div>
-          <button onClick={onLogout} className="w-full py-2 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-lg font-semibold text-sm hover:shadow-lg transition-all">
-            Logout
+          <button 
+            onClick={onLogout} 
+            className="w-full py-3 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-xl font-semibold text-sm hover:shadow-lg transition-all duration-200 hover:from-red-600 hover:to-red-700 flex items-center justify-center gap-2"
+          >
+            <span>🚪</span> Logout
           </button>
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="w-full lg:ml-64 flex-1">
-        <nav className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-40">
-          <div className="px-4 lg:px-6 py-4">
-            <h2 className="text-xl lg:text-2xl font-bold text-gray-800">
-              {tabs.find(t => t.id === activeTab)?.label}
-            </h2>
+      <div className="w-full lg:ml-72 flex-1">
+        {/* Top Bar */}
+        <nav className="bg-white/80 backdrop-blur-sm shadow-sm border-b border-slate-200 sticky top-0 z-40">
+          <div className="px-6 py-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="text-2xl font-bold text-slate-800">
+                  {tabs.find(t => t.id === activeTab)?.icon} {tabs.find(t => t.id === activeTab)?.label}
+                </h2>
+                <p className="text-sm text-slate-500 mt-1">Manage your school's {tabs.find(t => t.id === activeTab)?.label.toLowerCase()}</p>
+              </div>
+              <div className="flex items-center gap-4">
+                <div className="text-right">
+                  <p className="text-sm font-semibold text-slate-700">Welcome back!</p>
+                  <p className="text-xs text-slate-500">{currentTime.toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                </div>
+              </div>
+            </div>
           </div>
         </nav>
 
-        <div className="p-4 lg:p-6">
+        <div className="p-6">
 
         {activeTab === 'gallery' && (
-          <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl p-8 border border-gray-100">
-            <div className="flex justify-between items-center mb-6">
+          <div className="bg-white rounded-2xl shadow-xl p-8 border border-slate-200">
+            <div className="flex justify-between items-center mb-8">
               <div>
-                <h2 className="text-3xl font-extrabold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">Gallery</h2>
-                <p className="text-sm text-gray-500 font-semibold mt-1">Manage your image gallery</p>
+                <h2 className="text-3xl font-bold text-slate-800 flex items-center gap-3">
+                  🇼️ School Gallery
+                </h2>
+                <p className="text-slate-600 mt-2">Upload and manage school photos, events, and activities</p>
               </div>
-              <label className="px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl cursor-pointer hover:shadow-2xl transition-all transform hover:scale-105 font-bold flex items-center gap-2">
-                <span className="text-xl">📤</span>
-                Upload Images
+              <label className="px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl cursor-pointer hover:shadow-lg transition-all transform hover:scale-105 font-semibold flex items-center gap-3">
+                <span className="text-xl">📷</span>
+                Upload Photos
                 <input type="file" multiple accept="image/*" onChange={handleGalleryUpload} className="hidden" />
               </label>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
               {gallery.map(img => (
-                <div key={img._id} className="relative group rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all">
+                <div key={img._id} className="relative group rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
                   <img 
                     src={img.imageUrl} 
-                    className="w-full h-48 object-cover cursor-pointer" 
-                    onClick={() => {
-                      console.log('Image clicked:', img.imageUrl);
-                      setViewImage(img.imageUrl);
-                    }}
+                    className="w-full h-40 object-cover cursor-pointer" 
+                    onClick={() => setViewImage(img.imageUrl)}
                     alt="Gallery"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-all pointer-events-none">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all">
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
                         deleteItem('gallery', img._id);
                       }}
-                      className="absolute bottom-3 right-3 px-4 py-2 bg-red-500 text-white rounded-lg text-sm font-bold hover:bg-red-600 transition pointer-events-auto"
+                      className="absolute bottom-2 right-2 px-3 py-1 bg-red-500 text-white rounded-lg text-xs font-semibold hover:bg-red-600 transition"
                     >
                       🗑️ Delete
                     </button>
@@ -384,6 +415,13 @@ export default function AdminDashboard({ admin, onLogout }) {
                 </div>
               ))}
             </div>
+            {gallery.length === 0 && (
+              <div className="text-center py-16">
+                <div className="text-6xl mb-4">🖼️</div>
+                <p className="text-slate-500 text-lg">No photos uploaded yet</p>
+                <p className="text-slate-400 text-sm mt-2">Start building your school's photo gallery!</p>
+              </div>
+            )}
           </div>
         )}
 
