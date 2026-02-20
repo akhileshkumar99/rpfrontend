@@ -13,10 +13,15 @@ export default function Faculty() {
       const res = await fetch('https://rp-school-backend.onrender.com/api/faculty');
       const data = await res.json();
       
-      // DIRECT LOG - API RESPONSE
-      console.log('🔥 DIRECT API RESPONSE:', JSON.stringify(data, null, 2));
+      console.log('🔥 API Response:', data);
       
-      setFaculty(data);
+      // Force clean URLs
+      const cleanData = data.map(member => ({
+        ...member,
+        imageUrl: member.imageUrl && member.imageUrl.includes('cloudinary') ? member.imageUrl : null
+      }));
+      
+      setFaculty(cleanData);
     } catch (err) {
       console.error(err);
     }
