@@ -14,7 +14,12 @@ export default function Faculty() {
       const data = await res.json();
       console.log('🔍 Faculty API Response:', data);
       console.log('🖼️ Faculty Images:', data.map(f => ({ name: f.name, imageUrl: f.imageUrl })));
-      setFaculty(data);
+      // Clean URLs - remove any backend prefix if present
+      const cleanedData = data.map(faculty => ({
+        ...faculty,
+        imageUrl: faculty.imageUrl?.replace('https://rp-school-backend.onrender.com', '') || faculty.imageUrl
+      }));
+      setFaculty(cleanedData);
     } catch (err) {
       console.error(err);
     }
@@ -54,7 +59,7 @@ export default function Faculty() {
                 <div className="relative h-72 overflow-hidden">
                   {member.imageUrl ? (
                     <img 
-                      src={member.imageUrl.startsWith('http') ? member.imageUrl : `https://rp-school-backend.onrender.com${member.imageUrl}`}
+                      src={member.imageUrl}
                       alt={member.name}
                       className="w-full h-full object-cover transform group-hover:scale-125 group-hover:rotate-3 transition-transform duration-700"
                       onError={(e) => {
