@@ -54,20 +54,15 @@ export default function Faculty() {
                 style={{ animationDelay: `${idx * 100}ms` }}
               >
                 <div className="relative h-72 overflow-hidden">
-                  <div style={{background: 'yellow', padding: '10px', fontSize: '12px'}}>
-                    <p>Name: {member.name}</p>
-                    <p>ImageURL: {member.imageUrl || 'NO URL'}</p>
-                    <p>Valid: {(member.imageUrl && member.imageUrl.startsWith('http')) ? 'YES' : 'NO'}</p>
-                  </div>
                   {member.imageUrl ? (
                     <img 
                       src={member.imageUrl}
                       alt={member.name}
                       className="w-full h-64 object-cover"
                       onError={(e) => {
-                        console.error('❌ Image Error:', member.imageUrl);
+                        console.error('❌ Image failed:', member.imageUrl);
+                        e.target.src = 'https://via.placeholder.com/300x200?text=No+Image';
                       }}
-                      onLoad={() => console.log('✅ Image Loaded:', member.imageUrl)}
                     />
                   ) : (
                     <div className="w-full h-full bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center text-white text-6xl">

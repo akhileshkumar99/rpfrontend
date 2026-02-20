@@ -56,17 +56,15 @@ export default function Notices() {
           {notices.map((notice, idx) => (
             <div key={notice._id} className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all border-l-4 border-blue-600 overflow-hidden">
               <div className={`grid ${(notice.imageUrl && notice.imageUrl.startsWith('http')) ? 'md:grid-cols-2' : 'grid-cols-1'}`}>
-                {(notice.imageUrl && notice.imageUrl.startsWith('http')) && (
+                {notice.imageUrl && (
                   <div className={`${idx % 2 === 0 ? 'md:order-1' : 'md:order-2'}`}>
                     <img 
                       src={notice.imageUrl} 
                       alt={notice.title} 
                       className="w-full h-full min-h-[300px] object-contain"
                       onError={(e) => {
-                        console.error('❌ Notice Image Load Error:', notice.imageUrl);
-                        e.target.style.display = 'none';
+                        e.target.src = 'https://via.placeholder.com/400x300?text=No+Image';
                       }}
-                      onLoad={() => console.log('✅ Notice Image Loaded:', notice.imageUrl)}
                     />
                   </div>
                 )}
