@@ -61,12 +61,7 @@ export default function Faculty() {
                 style={{ animationDelay: `${idx * 100}ms` }}
               >
                 <div className="relative h-72 overflow-hidden">
-                  <div style={{border: '2px solid red', padding: '5px', margin: '5px'}}>
-                    <p>Debug Info:</p>
-                    <p>Has imageUrl: {member.imageUrl ? 'YES' : 'NO'}</p>
-                    <p>ImageUrl: {member.imageUrl || 'NULL'}</p>
-                  </div>
-                  {member.imageUrl ? (
+                  {(member.imageUrl && member.imageUrl.startsWith('http')) ? (
                     <img 
                       src={member.imageUrl}
                       alt={member.name}

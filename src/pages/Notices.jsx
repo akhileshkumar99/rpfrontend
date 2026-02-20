@@ -55,8 +55,8 @@ export default function Notices() {
         <div className="space-y-6">
           {notices.map((notice, idx) => (
             <div key={notice._id} className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all border-l-4 border-blue-600 overflow-hidden">
-              <div className={`grid ${notice.imageUrl ? 'md:grid-cols-2' : 'grid-cols-1'}`}>
-                {notice.imageUrl && (
+              <div className={`grid ${(notice.imageUrl && notice.imageUrl.startsWith('http')) ? 'md:grid-cols-2' : 'grid-cols-1'}`}>
+                {(notice.imageUrl && notice.imageUrl.startsWith('http')) && (
                   <div className={`${idx % 2 === 0 ? 'md:order-1' : 'md:order-2'}`}>
                     <img 
                       src={notice.imageUrl} 
@@ -70,7 +70,7 @@ export default function Notices() {
                     />
                   </div>
                 )}
-                <div className={`p-6 flex flex-col justify-center ${notice.imageUrl && idx % 2 === 0 ? 'md:order-2' : 'md:order-1'}`} style={{fontFamily: 'Arial Black, sans-serif'}}>
+                <div className={`p-6 flex flex-col justify-center ${(notice.imageUrl && notice.imageUrl.startsWith('http')) && idx % 2 === 0 ? 'md:order-2' : 'md:order-1'}`} style={{fontFamily: 'Arial Black, sans-serif'}}>
                   <div className="flex justify-between items-start mb-3">
                     <h3 className="text-2xl font-bold text-gray-900">{notice.title}</h3>
                     <span className={`px-3 py-1 rounded-full text-xs font-semibold border ${getPriorityColor(notice.priority)}`}>
