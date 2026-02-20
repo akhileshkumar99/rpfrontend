@@ -52,7 +52,7 @@ export default function Faculty() {
                 <div className="relative h-72 overflow-hidden">
                   {member.imageUrl ? (
                     <img 
-                      src={`https://rp-school-backend.onrender.com${member.imageUrl}`}
+                      src={member.imageUrl}
                       alt={member.name}
                       className="w-full h-full object-cover transform group-hover:scale-125 group-hover:rotate-3 transition-transform duration-700"
                     />

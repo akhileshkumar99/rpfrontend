@@ -52,7 +52,7 @@ export default function Notices() {
                 {notice.imageUrl && (
                   <div className={`${idx % 2 === 0 ? 'md:order-1' : 'md:order-2'}`}>
                     <img 
-                      src={`https://rp-school-backend.onrender.com${notice.imageUrl}`} 
+                      src={notice.imageUrl} 
                       alt={notice.title} 
                       className="w-full h-full min-h-[300px] object-contain" 
                     />
