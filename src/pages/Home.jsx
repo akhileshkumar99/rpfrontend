@@ -69,7 +69,7 @@ export default function Home({ setCurrentPage }) {
                   className="w-full h-48 bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center shadow-lg overflow-hidden cursor-pointer"
                   onClick={() => setSelectedFeature(feature)}
                 >
-                  <img src={feature.image || `https://images.unsplash.com/photo-${idx === 0 ? '1524178232752-5ba8c7d0e5e3' : idx === 1 ? '1567427017947-545c5f8d16ad' : idx === 2 ? '1498050108023-c5249f4df085' : '1488190211105-8b0e65b80b4e'}?w=400&h=300&fit=crop`} alt={feature.title} className="w-full h-full object-cover" />
+                  <img src={feature.image} alt={feature.title} className="w-full h-full object-cover" />
                 </div>
                 <div className="p-6">
                   <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
