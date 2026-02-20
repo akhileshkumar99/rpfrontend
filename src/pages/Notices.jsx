@@ -11,6 +11,8 @@ export default function Notices() {
     try {
       const res = await fetch('https://rp-school-backend.onrender.com/api/notices')
       const data = await res.json()
+      console.log('🔍 Notices API Response:', data);
+      console.log('🖼️ Notice Images:', data.map(n => ({ title: n.title, imageUrl: n.imageUrl })));
       setNotices(data)
     } catch (err) {
       console.error(err)
@@ -54,7 +56,12 @@ export default function Notices() {
                     <img 
                       src={notice.imageUrl} 
                       alt={notice.title} 
-                      className="w-full h-full min-h-[300px] object-contain" 
+                      className="w-full h-full min-h-[300px] object-contain"
+                      onError={(e) => {
+                        console.error('❌ Notice Image Load Error:', notice.imageUrl);
+                        e.target.style.display = 'none';
+                      }}
+                      onLoad={() => console.log('✅ Notice Image Loaded:', notice.imageUrl)}
                     />
                   </div>
                 )}

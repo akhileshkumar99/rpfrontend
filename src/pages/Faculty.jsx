@@ -12,6 +12,8 @@ export default function Faculty() {
     try {
       const res = await fetch('https://rp-school-backend.onrender.com/api/faculty');
       const data = await res.json();
+      console.log('🔍 Faculty API Response:', data);
+      console.log('🖼️ Faculty Images:', data.map(f => ({ name: f.name, imageUrl: f.imageUrl })));
       setFaculty(data);
     } catch (err) {
       console.error(err);
@@ -55,6 +57,11 @@ export default function Faculty() {
                       src={member.imageUrl}
                       alt={member.name}
                       className="w-full h-full object-cover transform group-hover:scale-125 group-hover:rotate-3 transition-transform duration-700"
+                      onError={(e) => {
+                        console.error('❌ Faculty Image Load Error:', member.imageUrl);
+                        e.target.style.display = 'none';
+                      }}
+                      onLoad={() => console.log('✅ Faculty Image Loaded:', member.imageUrl)}
                     />
                   ) : (
                     <div className="w-full h-full bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center text-white text-6xl">
