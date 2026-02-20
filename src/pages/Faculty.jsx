@@ -12,14 +12,18 @@ export default function Faculty() {
     try {
       const res = await fetch('https://rp-school-backend.onrender.com/api/faculty');
       const data = await res.json();
-      console.log('🔍 Faculty API Response:', data);
-      console.log('🖼️ Faculty Images:', data.map(f => ({ name: f.name, imageUrl: f.imageUrl })));
-      // Clean URLs - remove any backend prefix if present
-      const cleanedData = data.map(faculty => ({
-        ...faculty,
-        imageUrl: faculty.imageUrl?.replace('https://rp-school-backend.onrender.com', '') || faculty.imageUrl
-      }));
-      setFaculty(cleanedData);
+      console.log('🔍 Raw Faculty Data:', data);
+      
+      // Log each faculty member's image URL
+      data.forEach(faculty => {
+        console.log(`Faculty: ${faculty.name}`);
+        console.log(`Original imageUrl: ${faculty.imageUrl}`);
+        console.log(`Has imageUrl: ${!!faculty.imageUrl}`);
+        console.log(`Starts with http: ${faculty.imageUrl?.startsWith('http')}`);
+        console.log('---');
+      });
+      
+      setFaculty(data);
     } catch (err) {
       console.error(err);
     }
@@ -57,6 +61,11 @@ export default function Faculty() {
                 style={{ animationDelay: `${idx * 100}ms` }}
               >
                 <div className="relative h-72 overflow-hidden">
+                  <div style={{border: '2px solid red', padding: '5px', margin: '5px'}}>
+                    <p>Debug Info:</p>
+                    <p>Has imageUrl: {member.imageUrl ? 'YES' : 'NO'}</p>
+                    <p>ImageUrl: {member.imageUrl || 'NULL'}</p>
+                  </div>
                   {member.imageUrl ? (
                     <img 
                       src={member.imageUrl}
