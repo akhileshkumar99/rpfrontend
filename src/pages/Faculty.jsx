@@ -12,16 +12,9 @@ export default function Faculty() {
     try {
       const res = await fetch('https://rp-school-backend.onrender.com/api/faculty');
       const data = await res.json();
-      console.log('🔍 Raw Faculty Data:', data);
       
-      // Log each faculty member's image URL
-      data.forEach(faculty => {
-        console.log(`Faculty: ${faculty.name}`);
-        console.log(`Original imageUrl: ${faculty.imageUrl}`);
-        console.log(`Has imageUrl: ${!!faculty.imageUrl}`);
-        console.log(`Starts with http: ${faculty.imageUrl?.startsWith('http')}`);
-        console.log('---');
-      });
+      // DIRECT LOG - API RESPONSE
+      console.log('🔥 DIRECT API RESPONSE:', JSON.stringify(data, null, 2));
       
       setFaculty(data);
     } catch (err) {
@@ -61,16 +54,20 @@ export default function Faculty() {
                 style={{ animationDelay: `${idx * 100}ms` }}
               >
                 <div className="relative h-72 overflow-hidden">
-                  {(member.imageUrl && member.imageUrl.startsWith('http')) ? (
+                  <div style={{background: 'yellow', padding: '10px', fontSize: '12px'}}>
+                    <p>Name: {member.name}</p>
+                    <p>ImageURL: {member.imageUrl || 'NO URL'}</p>
+                    <p>Valid: {(member.imageUrl && member.imageUrl.startsWith('http')) ? 'YES' : 'NO'}</p>
+                  </div>
+                  {member.imageUrl ? (
                     <img 
                       src={member.imageUrl}
                       alt={member.name}
-                      className="w-full h-full object-cover transform group-hover:scale-125 group-hover:rotate-3 transition-transform duration-700"
+                      className="w-full h-64 object-cover"
                       onError={(e) => {
-                        console.error('❌ Faculty Image Load Error:', member.imageUrl);
-                        e.target.style.display = 'none';
+                        console.error('❌ Image Error:', member.imageUrl);
                       }}
-                      onLoad={() => console.log('✅ Faculty Image Loaded:', member.imageUrl)}
+                      onLoad={() => console.log('✅ Image Loaded:', member.imageUrl)}
                     />
                   ) : (
                     <div className="w-full h-full bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center text-white text-6xl">
